@@ -48,11 +48,7 @@ public class PrestadorService {
       throw new ErroApi(400, "Identificador do prestador não informado.");
     }
 
-    System.out.println(id);
-
     JsonObject p = dados.chamar("PHONE", ClienteDados.objeto("usuario_id", id));
-
-    System.out.println(p);
 
     if (!ClienteDados.encontrado(p)) {
 
@@ -61,12 +57,12 @@ public class PrestadorService {
 
     dados.chamar("CONTACT", ClienteDados.objeto("usuario_id", s(u, "id"), "prestador_id", id));
 
-    String phone = s(p.getAsJsonObject("value"), "phone");
+    String celular = s(p.getAsJsonObject("value"), "celular");
 
     String msg = URLEncoder.encode("Olá! Encontrei seu perfil no Quem Resolve e gostaria de um orçamento.", StandardCharsets.UTF_8);
 
     JsonObject objeto = new JsonObject();
-    objeto.addProperty("url", "https://wa.me/" + phone + "?text=" + msg);
+    objeto.addProperty("url", "https://wa.me/55" + celular + "?text=" + msg);
 
     return objeto;
   }
